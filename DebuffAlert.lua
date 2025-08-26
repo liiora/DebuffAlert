@@ -13,11 +13,28 @@ local function LoadVariables()
     DebuffAlert_Store.ShowIcon = DebuffAlert_Store.ShowIcon or true -- Default to showing the icon
     DebuffAlert_Store.DebuffTexturesToWatch = DebuffAlert_Store.DebuffTexturesToWatch or
         {
-            ["Spell_BrokenHeart"] = { enabled = true, name = "", boss_warning = "" },
-            ["Spell_Shadow_AntiShadow"] = { enabled = true, name = "", boss_warning = "" },
-            ["Inv_Misc_ShadowEgg"] = { enabled = true, name = "", boss_warning = "" },
+            ["Spell_BrokenHeart"] = { enabled = false, name = "", boss_warning = "" },
+            ["Spell_Shadow_AntiShadow"] = { enabled = false, name = "", boss_warning = "" },
+            ["Inv_Misc_ShadowEgg"] = { enabled = false, name = "", boss_warning = "" },
+            -- KARA40
+            ["inv_belt_18"] = { enabled = true, name = "Don't Move!", boss_warning = "Shackles of the Legion" },
+            -- NAXX
+            ["spell_shadow_callofbone"] = { enabled = true, name = "Grobbulus: Mutating Injection", boss_warning = "" },
+            ["spell_chargepositive"] = { enabled = true, name = "Thaddius: Positive", boss_warning = "" },
+            ["spell_chargenegative"] = { enabled = true, name = "Thaddius: Negative", boss_warning = "" },
+            ["spell_shadow_rainoffire"] = { enabled = true, name = "Faerlina: Rain of Fire", boss_warning = "" },
+            ["spell_nature_wispsplode"] = { enabled = true, name = "Kel'Thuzad: Detonate Mana", boss_warning = "" },
+            -- AQ40
+            ["ability_creature_disease_02"] = { enabled = true, name = "Kri: Summon Poison Cloud & C'Thun: Digestive Acid", boss_warning = "" },
+            -- MC
+            ["spell_fire_selfdestruct"] = { enabled = true, name = "Magmadar: Lava Bomb", boss_warning = "" },
+            ["inv_enchant_essenceastralsmall"] = { enabled = true, name = "Geddon: Living Bomb", boss_warning = "" },
+            -- BWL
+            ["inv_gauntlets_03"] = { enabled = true, name = "Vaelastrasz: Burning Adrenaline", boss_warning = "" },
+            ["spell_fire_fireball"] = { enabled = true, name = "Chromaggus: Flame Buffet", boss_warning = "" },
+            ["classicon_priest"] = { enabled = true, name = "Nefarian: Priestcall", boss_warning = "Priests! If you're going to keep" },
             -- Add more here
-        }  
+        }
 end
 
 -- Update the AddDebuffToWatch function to include a name parameter
@@ -765,8 +782,16 @@ frame:SetScript("OnEvent", function()
             end
         end
 
+        local function DebuffAlertReset(msg, editbox)
+            DebuffAlert_Store = {}
+            LoadVariables()
+        end
+
         SLASH_DEBUFFALERT1 = "/da"
         SlashCmdList["DEBUFFALERT"] = DebuffAlertCommands
+
+        SLASH_DEBUFFALERTRESET1 = "/dareset"
+        SlashCmdList["DEBUFFALERTRESET"] = DebuffAlertReset
 
         CreateFlashFrame()
         alertFrame = CreateAlertText()  -- Create and store the alert frame

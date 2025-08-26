@@ -28,6 +28,8 @@
 
 - **Open Options Panel**: Type `/da` in the chat to open the options panel where you can manage debuffs and settings.
 
+- **Reset to default configuration**: Type `/dareset` in the chat to reset all settings.
+
 ### Managing Debuffs
 
 1. **Add a Debuff**: Use the options panel to add a new debuff texture and assign a custom name.
