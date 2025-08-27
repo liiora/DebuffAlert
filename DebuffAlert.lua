@@ -7,6 +7,15 @@ local currentPage = 1
 local debuffsPerPage = 5
 local UpdateInterval = 5
 
+function DebuffAlert_SetOpacity(value)
+    DebuffAlert_Store.opacity = value
+    flashFrame.texture:SetVertexColor(1, 0, 0, DebuffAlert_GetOpacity()) -- Red color with 50% opacity
+end
+
+function DebuffAlert_GetOpacity()
+    return DebuffAlert_Store.opacity or 0.5
+end
+
 local function LoadVariables()
     DebuffAlert_Store = DebuffAlert_Store or {}
     DebuffAlert_Store.AlertPosition = DebuffAlert_Store.AlertPosition or { point = "CENTER", x = 0, y = 200 }
@@ -63,8 +72,7 @@ end
 -- Create the screen flash frame
 local function CreateFlashFrame()
     if flashFrame then
-        flashFrame:Hide()
-        flashFrame = nil
+        return
     end
     
     flashFrame = CreateFrame("Frame", nil, UIParent)
@@ -72,10 +80,10 @@ local function CreateFlashFrame()
     flashFrame:SetFrameStrata("FULLSCREEN_DIALOG")
     flashFrame:SetAlpha(0)
     
-    local texture = flashFrame:CreateTexture(nil, "BACKGROUND")
-    texture:SetAllPoints(flashFrame)
-    texture:SetTexture("Interface\\FullScreenTextures\\LowHealth")
-    texture:SetVertexColor(1, 0, 0, 0.5) -- Red color with 50% opacity
+    flashFrame.texture = flashFrame:CreateTexture(nil, "BACKGROUND")
+    flashFrame.texture:SetAllPoints(flashFrame)
+    flashFrame.texture:SetTexture("Interface\\FullScreenTextures\\LowHealth")
+    flashFrame.texture:SetVertexColor(1, 0, 0, DebuffAlert_GetOpacity()) -- Red color with 50% opacity
 end
 
 -- Test mode variables
@@ -91,11 +99,6 @@ function DebuffAlert_ToggleTestMode(texture)
     -- If test mode is active for a different texture, end it first
     elseif testModeActive then
         DebuffAlert_EndTestMode()
-    end
-    
-    -- Create flash frame if it doesn't exist
-    if not flashFrame then
-        CreateFlashFrame()
     end
     
     -- Set test mode variables
@@ -182,11 +185,6 @@ function DebuffAlert_ShowTestAlert(texture)
     
     -- Play the warning sound
     PlaySoundFile("Sound\\Interface\\RaidWarning.wav", "Master")
-    
-    -- Flash the screen - make sure we use the function properly
-    if not flashFrame then
-        CreateFlashFrame()
-    end
     
     -- Make sure the flash frame is shown and visible
     flashFrame:Show()
@@ -794,7 +792,6 @@ frame:SetScript("OnEvent", function()
         SLASH_DEBUFFALERTRESET1 = "/dareset"
         SlashCmdList["DEBUFFALERTRESET"] = DebuffAlertReset
 
-        CreateFlashFrame()
         alertFrame = CreateAlertText()  -- Create and store the alert frame
         
         -- Initialize the icon toggle button
@@ -856,7 +853,6 @@ frame:SetScript("OnUpdate", function(self, elapsed)
     if not elapsed then return end
     timeSinceLastCheck = timeSinceLastCheck + elapsed
     if timeSinceLastCheck >= 1 then
-        CreateFlashFrame()
         CreateAlertText()
         CheckDebuff()
         self:SetScript("OnUpdate", nil)

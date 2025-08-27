@@ -74,6 +74,31 @@
                 </Scripts>
             </Button>
 
+            <!-- Opacity slider -->
+            <Slider name="DebuffAlert_OpacitySlider" inherits="OptionsSliderTemplate" minValue="0" maxValue="1" valuestep="0.05">
+                <Size>
+                    <AbsDimension x="100" y="20" />
+                </Size>
+                <Anchors>
+                    <Anchor point="BOTTOMRIGHT" relativeTo="$parent" relativePoint="BOTTOMRIGHT">
+                        <Offset>
+                            <AbsDimension x="-16" y="24" />
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnValueChanged>
+                        DebuffAlert_SetOpacity(this:GetValue())
+                    </OnValueChanged>
+                    <OnShow>
+                        this:SetValue(DebuffAlert_GetOpacity())
+                    </OnShow>
+                    <OnLoad>
+                        getglobal(this:GetName() .. "Text"):SetText("Opacity")
+                    </OnLoad>
+                </Scripts>
+            </Slider>
+
             <!-- Input box -->
             <EditBox name="DebuffAlert_AddInput" inherits="InputBoxTemplate" autoFocus="false">
                 <Size>
