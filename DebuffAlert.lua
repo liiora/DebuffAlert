@@ -23,6 +23,7 @@ local function LoadVariables()
             ["spell_chargepositive"] = { enabled = true, name = "Thaddius: Positive", boss_warning = "" },
             ["spell_chargenegative"] = { enabled = true, name = "Thaddius: Negative", boss_warning = "" },
             ["spell_shadow_rainoffire"] = { enabled = true, name = "Faerlina: Rain of Fire", boss_warning = "" },
+            ["spell_frost_icestorm"] = { enabled = true, name = "Sapphiron: Blizzard", boss_warning = "" },
             ["spell_nature_wispsplode"] = { enabled = true, name = "Kel'Thuzad: Detonate Mana", boss_warning = "" },
             -- AQ40
             ["ability_creature_disease_02"] = { enabled = true, name = "Kri: Summon Poison Cloud & C'Thun: Digestive Acid", boss_warning = "" },
